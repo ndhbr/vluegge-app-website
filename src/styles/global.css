@@ -18,7 +18,14 @@
 }
 
 html {
-  scroll-padding-top: 5rem;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* matches h-16 (64px) + buffer */
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 5.5rem; /* matches md:h-[72px] + buffer */
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

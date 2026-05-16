@@ -67,14 +67,7 @@ const jsonLdWebsite = {
     <slot />
     <script>
       // --- Reveal on scroll ---
-      const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
-
-      function showAll() {
-        reveals.forEach((el) => {
-          el.classList.add('visible');
-          observer.unobserve(el);
-        });
-      }
+      const reveals = document.querySelectorAll<HTMLElement>('.reveal');
 
       const observer = new IntersectionObserver(
         (entries) => {
@@ -89,33 +82,6 @@ const jsonLdWebsite = {
       );
 
       reveals.forEach((el) => observer.observe(el));
-
-      // --- Anchor navigation ---
-      // Show all reveals first (only opacity, no layout change), then measure
-      // and scroll. This ensures getBoundingClientRect is stable every time.
-      const header = document.querySelector<HTMLElement>('header');
-
-      document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
-        link.addEventListener('click', (e) => {
-          const hash = link.getAttribute('href')?.slice(1);
-          if (!hash) return;
-          const target = document.getElementById(hash);
-          if (!target) return;
-
-          e.preventDefault();
-          showAll();
-
-          // offsetTop chain is viewport-scroll-independent unlike getBoundingClientRect
-          let offsetY = 0;
-          let el: HTMLElement | null = target;
-          while (el) { offsetY += el.offsetTop; el = el.offsetParent as HTMLElement | null; }
-          const headerH = header?.offsetHeight ?? 72;
-          const targetY = offsetY - headerH - 8;
-
-          window.scrollTo({ top: targetY, behavior: 'smooth' });
-          history.pushState(null, '', `#${hash}`);
-        });
-      });
     </script>
   </body>
 </html>
