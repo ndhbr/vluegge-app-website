@@ -82,34 +82,40 @@ const jsonLdWebsite = {
 
       reveals.forEach((el) => observer.observe(el));
 
-      // When navigating to an anchor, instantly reveal all .reveal elements
-      // that are above (or within) the target section so the layout is fully
-      // settled before the browser calculates the scroll position.
-      function revealAbove(targetId: string) {
-        const target = document.getElementById(targetId);
-        if (!target) return;
-        const targetTop = target.getBoundingClientRect().top + window.scrollY;
-        reveals.forEach((el) => {
-          const elTop = el.getBoundingClientRect().top + window.scrollY;
-          if (elTop <= targetTop + 100) {
-            el.style.transition = 'none';
-            el.classList.add('visible');
-            observer.unobserve(el);
-          }
-        });
-      }
-
+      // Anchor navigation: prevent native scroll, instantly reveal ALL .reveal
+      // elements (layout fully settled), then manually scroll to target.
+      // This avoids the off-by-N-pixels bug caused by translateY(32px) on
+      // not-yet-visible elements shifting the document height mid-scroll.
       document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
         link.addEventListener('click', (e) => {
           const hash = link.getAttribute('href')!.slice(1);
           if (!hash) return;
-          // Instantly settle layout above target, then let browser scroll
-          revealAbove(hash);
-          // Restore transitions on next frame so subsequent reveals still animate
+          const target = document.getElementById(hash);
+          if (!target) return;
+
+          e.preventDefault();
+
+          // 1. Instantly make every reveal visible (no transition) so the
+          //    full document height is correct before we measure offsets.
+          reveals.forEach((el) => {
+            if (!el.classList.contains('visible')) {
+              el.style.transition = 'none';
+              el.classList.add('visible');
+              observer.unobserve(el);
+            }
+          });
+
+          // 2. Scroll after a paint so the layout reflow is complete.
           requestAnimationFrame(() => {
-            reveals.forEach((el) => {
-              el.style.transition = '';
-            });
+            const headerHeight = (document.querySelector('header') as HTMLElement | null)?.offsetHeight ?? 72;
+            const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 16;
+            window.scrollTo({ top, behavior: 'smooth' });
+
+            // 3. Restore transitions after scroll starts so future in-viewport
+            //    elements can still animate if the user scrolls manually.
+            setTimeout(() => {
+              reveals.forEach((el) => { el.style.transition = ''; });
+            }, 100);
           });
         });
       });
