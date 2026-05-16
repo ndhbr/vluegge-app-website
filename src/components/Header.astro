@@ -74,6 +74,7 @@ const navLinks = [
       link.addEventListener('click', () => {
         menu.classList.add('hidden');
         btn.setAttribute('aria-expanded', 'false');
+        btn.focus();
       });
     });
   }
