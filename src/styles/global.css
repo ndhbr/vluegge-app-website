@@ -106,16 +106,16 @@ body {
 }
 
 /* Scroll-triggered reveal animations */
-/* Only opacity is animated — no transform — so elements always occupy their
-   full layout space and anchor scroll positions are never wrong. */
 .reveal {
   opacity: 0;
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .reveal.visible {
   opacity: 1;
+  transform: translateY(0);
 }
 
 
@@ -197,7 +197,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transition: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
   .hero-animate { opacity: 1; animation: none; }
   .float-slow, .float-medium, .float-fast { animation: none; }
   .gradient-text-animated { animation: none; }
