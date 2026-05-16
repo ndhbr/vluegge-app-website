@@ -66,7 +66,7 @@ const jsonLdWebsite = {
     <a href="#main-content" class="skip-link">Zum Inhalt springen</a>
     <slot />
     <script>
-      const reveals = document.querySelectorAll('.reveal');
+      const reveals = document.querySelectorAll<HTMLElement>('.reveal');
 
       const observer = new IntersectionObserver(
         (entries) => {
@@ -81,6 +81,38 @@ const jsonLdWebsite = {
       );
 
       reveals.forEach((el) => observer.observe(el));
+
+      // When navigating to an anchor, instantly reveal all .reveal elements
+      // that are above (or within) the target section so the layout is fully
+      // settled before the browser calculates the scroll position.
+      function revealAbove(targetId: string) {
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        const targetTop = target.getBoundingClientRect().top + window.scrollY;
+        reveals.forEach((el) => {
+          const elTop = el.getBoundingClientRect().top + window.scrollY;
+          if (elTop <= targetTop + 100) {
+            el.style.transition = 'none';
+            el.classList.add('visible');
+            observer.unobserve(el);
+          }
+        });
+      }
+
+      document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          const hash = link.getAttribute('href')!.slice(1);
+          if (!hash) return;
+          // Instantly settle layout above target, then let browser scroll
+          revealAbove(hash);
+          // Restore transitions on next frame so subsequent reveals still animate
+          requestAnimationFrame(() => {
+            reveals.forEach((el) => {
+              el.style.transition = '';
+            });
+          });
+        });
+      });
     </script>
   </body>
 </html>
