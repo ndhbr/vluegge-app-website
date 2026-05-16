@@ -66,7 +66,7 @@ const jsonLdWebsite = {
     <a href="#main-content" class="skip-link">Zum Inhalt springen</a>
     <slot />
     <script>
-      const reveals = document.querySelectorAll<HTMLElement>('.reveal');
+      const reveals = document.querySelectorAll('.reveal');
 
       const observer = new IntersectionObserver(
         (entries) => {
@@ -81,44 +81,6 @@ const jsonLdWebsite = {
       );
 
       reveals.forEach((el) => observer.observe(el));
-
-      // Anchor navigation: prevent native scroll, instantly reveal ALL .reveal
-      // elements (layout fully settled), then manually scroll to target.
-      // This avoids the off-by-N-pixels bug caused by translateY(32px) on
-      // not-yet-visible elements shifting the document height mid-scroll.
-      document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
-        link.addEventListener('click', (e) => {
-          const hash = link.getAttribute('href')!.slice(1);
-          if (!hash) return;
-          const target = document.getElementById(hash);
-          if (!target) return;
-
-          e.preventDefault();
-
-          // 1. Instantly make every reveal visible (no transition) so the
-          //    full document height is correct before we measure offsets.
-          reveals.forEach((el) => {
-            if (!el.classList.contains('visible')) {
-              el.style.transition = 'none';
-              el.classList.add('visible');
-              observer.unobserve(el);
-            }
-          });
-
-          // 2. Scroll after a paint so the layout reflow is complete.
-          requestAnimationFrame(() => {
-            const headerHeight = (document.querySelector('header') as HTMLElement | null)?.offsetHeight ?? 72;
-            const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 16;
-            window.scrollTo({ top, behavior: 'smooth' });
-
-            // 3. Restore transitions after scroll starts so future in-viewport
-            //    elements can still animate if the user scrolls manually.
-            setTimeout(() => {
-              reveals.forEach((el) => { el.style.transition = ''; });
-            }, 100);
-          });
-        });
-      });
     </script>
   </body>
 </html>
