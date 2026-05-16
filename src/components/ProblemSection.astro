@@ -1,0 +1,55 @@
+---
+import ImageFrame from './ImageFrame.astro';
+---
+
+<section id="problem" class="section-padding bg-[#F8FAFC]" aria-labelledby="problem-heading">
+  <div class="container-main">
+    <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <!-- Text -->
+      <div class="reveal">
+        <h2 id="problem-heading" class="mb-6 text-3xl font-bold leading-tight text-navy md:text-4xl">
+          Soziale Kontakte sollten nicht am fehlenden sicheren Rahmen scheitern.
+        </h2>
+        <p class="mb-4 text-lg leading-relaxed text-text-main">
+          Viele Menschen mit Unterstützungsbedarf wünschen sich Freundschaften, gemeinsame Aktivitäten oder Nähe – doch passende und sichere Möglichkeiten fehlen oft.
+        </p>
+        <p class="mb-6 text-lg leading-relaxed text-text-main">
+          Für Angehörige, Betreuer und Einrichtungen entstehen dabei häufig Fragen, die ohne klare Begleitung schwer zu beantworten sind.
+        </p>
+
+        <!-- Questions -->
+        <ul class="mb-8 space-y-3" role="list">
+          <li class="flex items-start gap-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="mt-0.5 shrink-0" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="#155DFC" stroke-width="2"/><path d="M9 9a3 3 0 015.12 2.13c0 1.5-2.12 2.12-2.12 3.37M12 17h.01" stroke="#155DFC" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="text-base text-text-main">Ist der Kontakt sicher?</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="mt-0.5 shrink-0" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="#155DFC" stroke-width="2"/><path d="M9 9a3 3 0 015.12 2.13c0 1.5-2.12 2.12-2.12 3.37M12 17h.01" stroke="#155DFC" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="text-base text-text-main">Passt die Person?</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="mt-0.5 shrink-0" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="#155DFC" stroke-width="2"/><path d="M9 9a3 3 0 015.12 2.13c0 1.5-2.12 2.12-2.12 3.37M12 17h.01" stroke="#155DFC" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="text-base text-text-main">Wer begleitet?</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="mt-0.5 shrink-0" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="#155DFC" stroke-width="2"/><path d="M9 9a3 3 0 015.12 2.13c0 1.5-2.12 2.12-2.12 3.37M12 17h.01" stroke="#155DFC" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="text-base text-text-main">Was passiert im Zweifel?</span>
+          </li>
+        </ul>
+
+        <p class="text-lg font-bold text-primary">
+          vluegge schafft einen geschützten Rahmen – ohne Selbstständigkeit zu nehmen.
+        </p>
+      </div>
+
+      <!-- Image -->
+      <div class="reveal reveal-delay-2">
+        <ImageFrame
+          src="/assets/images/vluegge-app-holding-hands.webp"
+          alt="Zwei Menschen halten Händchen bei einem gemeinsamen Spaziergang im Park."
+          class="aspect-[3/4] w-full max-w-sm mx-auto shadow-card"
+        />
+      </div>
+    </div>
+  </div>
+</section>

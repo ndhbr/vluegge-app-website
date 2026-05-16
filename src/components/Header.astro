@@ -1,0 +1,77 @@
+---
+import Logo from './Logo.astro';
+
+const navLinks = [
+  { href: '#so-funktionierts', label: "So funktioniert's" },
+  { href: '#sicherheit', label: 'Sicherheit' },
+  { href: '#fuer-wen', label: 'Für wen' },
+  { href: '#vision', label: 'Vision' },
+  { href: '#app', label: 'App' },
+  { href: '#kontakt', label: 'Kontakt' },
+];
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 border-b border-medium-grey/40 bg-white/80 backdrop-blur-md">
+  <div class="container-main flex h-16 items-center justify-between md:h-[72px]">
+    <Logo />
+
+    <!-- Desktop Nav -->
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Hauptnavigation">
+      {navLinks.map((link) => (
+        <a href={link.href} class="rounded-lg px-3.5 py-2 text-sm font-medium text-text-main transition-colors hover:text-primary focus-ring">
+          {link.label}
+        </a>
+      ))}
+      <a href="#app" class="ml-3 rounded-btn bg-light-blue px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white focus-ring">
+        App herunterladen
+      </a>
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <button
+      type="button"
+      class="flex h-10 w-10 items-center justify-center rounded-lg text-navy lg:hidden focus-ring"
+      aria-label="Menü öffnen"
+      aria-expanded="false"
+      id="mobile-menu-btn"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Nav -->
+  <nav
+    id="mobile-menu"
+    class="hidden border-t border-medium-grey/40 bg-white px-5 pb-5 pt-3 lg:hidden"
+    aria-label="Mobile Navigation"
+  >
+    {navLinks.map((link) => (
+      <a href={link.href} class="block rounded-lg px-3 py-2.5 text-base font-medium text-text-main transition-colors hover:text-primary focus-ring">
+        {link.label}
+      </a>
+    ))}
+    <a href="#app" class="mt-2 block rounded-btn bg-light-blue px-4 py-2.5 text-center text-sm font-semibold text-primary focus-ring">
+      App herunterladen
+    </a>
+  </nav>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      menu.classList.toggle('hidden');
+    });
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>

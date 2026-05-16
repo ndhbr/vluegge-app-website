@@ -1,0 +1,12 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<a href="/" class:list={['flex items-center gap-2 focus-ring rounded-lg', className]} aria-label="vluegge Startseite">
+  <img src="/assets/images/vluegge-logo.svg" alt="" class="h-8 w-8" aria-hidden="true" />
+  <img src="/assets/images/logo.svg" alt="vluegge" class="h-7 w-auto" />
+</a>

@@ -1,0 +1,86 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'vluegge – Sicher neue Menschen kennenlernen. Begleitet statt allein.',
+  description = 'vluegge verbindet Menschen mit Unterstützungsbedarf sicher und begleitet mit neuen Kontakten für Freundschaft, Beziehung und gemeinsame Aktivitäten.',
+} = Astro.props;
+
+const canonicalUrl = 'https://vluegge.com/';
+
+const jsonLdOrganization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'vluegge UG',
+  url: 'https://vluegge.com/',
+  email: 'hello@vluegge.com',
+  description: 'Plattform für sichere, begleitete soziale Kontakte für Menschen mit Unterstützungsbedarf.',
+};
+
+const jsonLdWebsite = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'vluegge',
+  url: 'https://vluegge.com/',
+  description,
+};
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="theme-color" content="#155DFC" />
+    <link rel="icon" type="image/svg+xml" href="/assets/images/vluegge-logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="vluegge" />
+    <meta property="og:locale" content="de_DE" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLdOrganization)} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLdWebsite)} />
+  </head>
+  <body class="bg-white antialiased">
+    <a href="#main-content" class="skip-link">Zum Inhalt springen</a>
+    <slot />
+    <script>
+      const reveals = document.querySelectorAll('.reveal');
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.08, rootMargin: '50px 0px -20px 0px' }
+      );
+
+      reveals.forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>

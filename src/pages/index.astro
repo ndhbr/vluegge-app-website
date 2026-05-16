@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import ProblemSection from '../components/ProblemSection.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import SafetySection from '../components/SafetySection.astro';
+import AudienceSection from '../components/AudienceSection.astro';
+import OutcomeSection from '../components/OutcomeSection.astro';
+import AppAvailability from '../components/AppAvailability.astro';
+import ContactSection from '../components/ContactSection.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout>
+  <Header />
+  <main id="main-content">
+    <Hero />
+    <ProblemSection />
+    <HowItWorks />
+    <SafetySection />
+    <AudienceSection />
+    <OutcomeSection />
+    <AppAvailability />
+    <ContactSection />
+  </main>
+  <Footer />
+</BaseLayout>

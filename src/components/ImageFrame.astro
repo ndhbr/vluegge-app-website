@@ -1,0 +1,28 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  eager?: boolean;
+}
+
+const { src, alt, class: className = '', eager = false } = Astro.props;
+---
+
+<div class:list={['relative overflow-hidden rounded-card-lg bg-gradient-to-br from-light-blue to-light-purple', className]}>
+  <img
+    src={src}
+    alt={alt}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : undefined}
+    decoding={eager ? 'sync' : 'async'}
+    class="h-full w-full object-cover"
+    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+  />
+  <div class="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-light-blue via-white to-light-purple" aria-hidden="true">
+    <div class="text-center">
+      <div class="mx-auto mb-3 h-16 w-16 rounded-full bg-gradient-to-br from-primary/20 to-purple/20"></div>
+      <span class="text-sm font-medium text-text-main/60">Bild folgt</span>
+    </div>
+  </div>
+</div>
