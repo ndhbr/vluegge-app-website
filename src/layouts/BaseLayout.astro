@@ -67,7 +67,14 @@ const jsonLdWebsite = {
     <slot />
     <script>
       // --- Reveal on scroll ---
-      const reveals = document.querySelectorAll<HTMLElement>('.reveal');
+      const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+
+      function showAll() {
+        reveals.forEach((el) => {
+          el.classList.add('visible');
+          observer.unobserve(el);
+        });
+      }
 
       const observer = new IntersectionObserver(
         (entries) => {
@@ -84,9 +91,8 @@ const jsonLdWebsite = {
       reveals.forEach((el) => observer.observe(el));
 
       // --- Anchor navigation ---
-      // The browser's native smooth scroll runs BEFORE the IntersectionObserver
-      // can settle reveal animations, so we take over: preventDefault, flash all
-      // reveals visible (no reflow needed since only opacity changes), then scroll.
+      // Show all reveals first (only opacity, no layout change), then measure
+      // and scroll. This ensures getBoundingClientRect is stable every time.
       const header = document.querySelector<HTMLElement>('header');
 
       document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
@@ -97,22 +103,16 @@ const jsonLdWebsite = {
           if (!target) return;
 
           e.preventDefault();
+          showAll();
 
-          // Instantly show all hidden reveals so layout is fully settled
-          reveals.forEach((el) => {
-            if (!el.classList.contains('visible')) {
-              el.classList.add('visible');
-              observer.unobserve(el);
-            }
-          });
-
-          // Calculate position after all reveals are visible
+          // offsetTop chain is viewport-scroll-independent unlike getBoundingClientRect
+          let offsetY = 0;
+          let el: HTMLElement | null = target;
+          while (el) { offsetY += el.offsetTop; el = el.offsetParent as HTMLElement | null; }
           const headerH = header?.offsetHeight ?? 72;
-          const targetY = target.getBoundingClientRect().top + window.scrollY - headerH - 8;
+          const targetY = offsetY - headerH - 8;
 
           window.scrollTo({ top: targetY, behavior: 'smooth' });
-
-          // Update URL hash without jumping
           history.pushState(null, '', `#${hash}`);
         });
       });
