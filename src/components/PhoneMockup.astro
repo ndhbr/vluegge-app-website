@@ -2,9 +2,10 @@
 interface Props {
   class?: string;
   screenshot?: string;
+  alt?: string;
 }
 
-const { class: className = '', screenshot } = Astro.props;
+const { class: className = '', screenshot, alt = 'vluegge App Vorschau' } = Astro.props;
 ---
 
 <div class:list={['relative mx-auto w-[280px]', className]}>
@@ -15,7 +16,7 @@ const { class: className = '', screenshot } = Astro.props;
     <!-- Screen: aspect ratio matches 768x1704 screenshots to prevent layout shift -->
     <div class="overflow-hidden rounded-[32px] bg-white" style="aspect-ratio: 768/1704;">
       {screenshot ? (
-        <img src={screenshot} alt="vluegge App Vorschau" class="h-full w-full object-cover" loading="lazy" width="768" height="1704" />
+        <img src={screenshot} alt={alt} class="h-full w-full object-cover" loading="lazy" width="768" height="1704" />
       ) : (
         <div class="flex min-h-[586px] flex-col px-4 pt-10 pb-3">
           <!-- App Header -->
