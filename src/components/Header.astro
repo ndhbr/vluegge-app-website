@@ -1,13 +1,16 @@
 ---
 import Logo from './Logo.astro';
 
+const isHome = Astro.url.pathname === '/';
+const anchor = (hash: string) => isHome ? hash : `/${hash}`;
+
 const navLinks = [
-  { href: '#so-funktionierts', label: "So funktioniert's" },
-  { href: '#sicherheit', label: 'Sicherheit' },
-  { href: '#fuer-wen', label: 'Für wen' },
-  { href: '#vision', label: 'Vision' },
-  { href: '#app', label: 'App' },
-  { href: '#kontakt', label: 'Kontakt' },
+  { href: anchor('#so-funktionierts'), label: "So funktioniert's" },
+  { href: anchor('#sicherheit'), label: 'Sicherheit' },
+  { href: anchor('#fuer-wen'), label: 'Für wen' },
+  { href: anchor('#vision'), label: 'Vision' },
+  { href: anchor('#app'), label: 'App' },
+  { href: anchor('#kontakt'), label: 'Kontakt' },
 ];
 ---
 
@@ -22,7 +25,7 @@ const navLinks = [
           {link.label}
         </a>
       ))}
-      <a href="#app" class="ml-3 rounded-btn bg-light-blue px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white focus-ring">
+      <a href={anchor('#app')} class="ml-3 rounded-btn bg-light-blue px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white focus-ring">
         App herunterladen
       </a>
     </nav>
@@ -52,7 +55,7 @@ const navLinks = [
         {link.label}
       </a>
     ))}
-    <a href="#app" class="mt-2 block rounded-btn bg-light-blue px-4 py-2.5 text-center text-sm font-semibold text-primary focus-ring">
+    <a href={anchor('#app')} class="mt-2 block rounded-btn bg-light-blue px-4 py-2.5 text-center text-sm font-semibold text-primary focus-ring">
       App herunterladen
     </a>
   </nav>
