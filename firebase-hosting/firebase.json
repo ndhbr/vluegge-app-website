@@ -1,0 +1,49 @@
+{
+  "hosting": {
+    "site": "vluegge",
+    "public": "public",
+    "ignore": ["firebase.json", "**/node_modules/**"],
+    "appAssociation": "NONE",
+    "rewrites": [
+      {
+        "source": "/auth/password-recovery",
+        "destination": "/password-recovery.html"
+      },
+      {
+        "source": "/identity/return",
+        "destination": "/identity-return.html"
+      }
+    ],
+    "headers": [
+      {
+        "regex": "/.*",
+        "headers": [
+          { "key": "Cache-Control", "value": "no-store" },
+          { "key": "Referrer-Policy", "value": "no-referrer" },
+          { "key": "X-Content-Type-Options", "value": "nosniff" },
+          { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+          }
+        ]
+      },
+      {
+        "source": "/.well-known/assetlinks.json",
+        "headers": [
+          { "key": "Content-Type", "value": "application/json" }
+        ]
+      },
+      {
+        "source": "/.well-known/apple-app-site-association",
+        "headers": [
+          { "key": "Content-Type", "value": "application/json" }
+        ]
+      }
+    ]
+  },
+  "emulators": {
+    "hosting": { "host": "127.0.0.1", "port": 5055 },
+    "ui": { "enabled": false }
+  }
+}

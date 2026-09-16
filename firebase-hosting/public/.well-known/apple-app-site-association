@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "T9PMR76382.com.vluegge.app",
+        "paths": [
+          "/auth/password-recovery",
+          "/identity/return"
+        ]
+      }
+    ]
+  }
+}
