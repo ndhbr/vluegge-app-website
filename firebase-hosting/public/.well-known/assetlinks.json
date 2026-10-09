@@ -3,7 +3,7 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "de.bavarianbits.vluegge",
+      "package_name": "com.vluegge.app",
       "sha256_cert_fingerprints": [
         "<PRODUCTION_SHA256_CERT_FINGERPRINT>"
       ]
