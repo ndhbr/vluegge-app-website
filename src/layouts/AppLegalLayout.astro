@@ -1,0 +1,51 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const { title, description } = Astro.props.frontmatter;
+---
+
+<BaseLayout title={title} description={description}>
+  <Header />
+  <main id="main-content" class="section-padding">
+    <div class="legal-content container-main max-w-3xl text-base leading-relaxed text-text-main">
+      <slot />
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .legal-content :global(h1) {
+    @apply mb-2 text-3xl font-bold text-navy md:text-4xl;
+  }
+
+  .legal-content :global(h1 + p) {
+    @apply mb-10 text-sm text-text-main/60;
+  }
+
+  .legal-content :global(h2) {
+    @apply mb-4 mt-10 text-xl font-bold text-navy;
+  }
+
+  .legal-content :global(p) {
+    @apply mb-4;
+  }
+
+  .legal-content :global(strong) {
+    @apply font-semibold text-navy;
+  }
+
+  .legal-content :global(h1 + p strong) {
+    @apply font-normal text-inherit;
+  }
+
+  .legal-content :global(ul) {
+    @apply mb-4 list-disc space-y-2 pl-6;
+  }
+
+  .legal-content :global(a) {
+    @apply text-primary underline underline-offset-2 transition-colors hover:text-primary/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
+  }
+</style>

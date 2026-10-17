@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const guardianMailto = `mailto:hello@vluegge.com?subject=${encodeURIComponent('Guardian-Konto löschen')}`;
+const participantBody = [
+  'Hallo vluegge-Team,',
+  '',
+  'ich möchte mein Teilnehmer-Konto und meine persönlichen Daten löschen lassen.',
+  '',
+  'Name oder Anzeigename des Teilnehmers: ',
+  'Name oder E-Mail-Adresse des Guardians (falls bekannt): ',
+  'Kontaktmöglichkeit für Rückfragen: ',
+  '',
+  'Vielen Dank!',
+].join('\r\n');
+const participantMailto = `mailto:hello@vluegge.com?subject=${encodeURIComponent('Teilnehmer-Konto löschen')}&body=${encodeURIComponent(participantBody)}`;
+---
+
+<BaseLayout title="vluegge-Konto löschen" description="So kannst du dein Guardian- oder Teilnehmer-Konto und deine persönlichen Daten bei vluegge löschen lassen.">
+  <Header />
+  <main id="main-content" class="pb-16 pt-28 md:pb-24 md:pt-36">
+    <div class="container-main max-w-4xl">
+      <h1 class="mb-4 text-3xl font-bold text-navy md:text-4xl">vluegge-Konto löschen</h1>
+      <p class="max-w-2xl text-lg leading-relaxed">
+        Du möchtest dein Konto und deine persönlichen Daten bei vluegge löschen lassen? Hier erfährst du, wie das funktioniert.
+      </p>
+
+      <div class="my-10 grid gap-6 md:grid-cols-2">
+        <section class="card flex flex-col p-6 md:p-8" aria-labelledby="guardian-heading">
+          <h2 id="guardian-heading" class="mb-4 text-2xl font-bold text-navy">Guardian-Konto löschen</h2>
+          <p class="mb-4 leading-relaxed">
+            Als Guardian kannst du dein Konto direkt in der vluegge-App unter <strong class="font-semibold text-navy">Einstellungen → Konto löschen</strong> entfernen.
+          </p>
+          <p class="mb-4 leading-relaxed">Du kannst die Löschung auch per E-Mail beantragen.</p>
+          <p class="mb-6 leading-relaxed">Sende die E-Mail möglichst von deiner registrierten Adresse.</p>
+          <a href={guardianMailto} class="btn-primary mt-auto min-h-14 w-full justify-center text-center">
+            Löschung per E-Mail beantragen
+          </a>
+          <p class="mt-4 text-sm leading-relaxed">
+            Bestehende Abonnements müssen separat im App Store oder Google Play gekündigt werden.
+          </p>
+        </section>
+
+        <section class="card flex flex-col p-6 md:p-8" aria-labelledby="participant-heading">
+          <h2 id="participant-heading" class="mb-4 text-2xl font-bold text-navy">Teilnehmer-Konto löschen</h2>
+          <p class="mb-4 leading-relaxed">Auch als Teilnehmer kannst du die Löschung deines Kontos beantragen.</p>
+          <p class="mb-4 leading-relaxed">
+            Da Teilnehmer keine eigene Login-E-Mail-Adresse besitzen, benötigen wir einige Angaben zur Zuordnung.
+          </p>
+          <ul class="mb-6 list-disc space-y-2 pl-5 leading-relaxed">
+            <li>Name oder Anzeigename des Teilnehmers</li>
+            <li>Name oder E-Mail-Adresse des Guardians, falls bekannt</li>
+            <li>Kontaktmöglichkeit für Rückfragen</li>
+          </ul>
+          <a href={participantMailto} class="btn-primary mt-auto min-h-14 w-full justify-center text-center">
+            Teilnehmer-Konto löschen lassen
+          </a>
+          <p class="mt-4 text-sm leading-relaxed">
+            Wir prüfen deine Anfrage und bestätigen gegebenenfalls deine Identität, bevor wir dein Konto löschen.
+          </p>
+        </section>
+      </div>
+
+      <section class="mb-10" aria-labelledby="deletion-heading">
+        <h2 id="deletion-heading" class="mb-4 text-2xl font-bold text-navy">Was passiert bei der Löschung?</h2>
+        <ul class="list-disc space-y-3 pl-5 leading-relaxed">
+          <li>Das Konto und das zugehörige Profil werden gelöscht.</li>
+          <li>Zugehörige Kontakte, Chats, Bilder und Termine können ebenfalls gelöscht werden.</li>
+          <li>Bereits an andere Geräte versendete Benachrichtigungen können nicht zurückgerufen werden.</li>
+          <li>Gesetzlich aufzubewahrende Daten können gegebenenfalls länger gespeichert bleiben.</li>
+          <li><strong class="font-semibold text-navy">Die Löschung kann nicht rückgängig gemacht werden.</strong></li>
+        </ul>
+      </section>
+
+      <section class="rounded-card bg-light-blue p-6 md:p-8" aria-labelledby="support-heading">
+        <h2 id="support-heading" class="mb-4 text-2xl font-bold text-navy">Fragen oder Unterstützung</h2>
+        <p class="mb-3 leading-relaxed">Du benötigst Hilfe bei der Kontolöschung? Wir helfen dir gerne weiter.</p>
+        <a href="mailto:hello@vluegge.com" class="focus-ring rounded text-primary underline underline-offset-4 hover:text-primary/80">hello@vluegge.com</a>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
